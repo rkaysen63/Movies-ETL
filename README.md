@@ -27,6 +27,50 @@ The purpose of this project is to prepare reusable code to clean, join and load 
   * remove the nearly empty language columns
   * and merge similar column names
     
+          def clean_movie(movie):
+          movie = dict(movie) #create a non-destructive copy
+          alt_titles = {}
+          # combine alternate titles into one list
+
+          for key in ['Also known as','Arabic','Cantonese','Chinese','French',
+                      'Hangul','Hebrew','Hepburn','Japanese','Literally',
+                      'Mandarin','McCune–Reischauer','Original title','Polish',
+                      'Revised Romanization','Romanized','Russian',
+                      'Simplified','Traditional','Yiddish']:  
+
+              if key in movie:
+                  alt_titles[key] = movie[key]
+                  movie.pop(key)
+          if len(alt_titles) > 0:
+              print(alt_titles)
+              movie['alt_titles'] = alt_titles
+
+          # merge column names
+          def change_column_name(old_name, new_name):
+              if old_name in movie:
+                  movie[new_name] = movie.pop(old_name)
+          change_column_name('Adaptation by', 'Writer(s)')
+          change_column_name('Country of origin', 'Country')
+          change_column_name('Directed by', 'Director')
+          change_column_name('Distributed by', 'Distributor')
+          change_column_name('Edited by', 'Editor(s)')
+          change_column_name('Length', 'Running time')
+          change_column_name('Original release', 'Release date')
+          change_column_name('Music by', 'Composer(s)')
+          change_column_name('Produced by', 'Producer(s)')
+          change_column_name('Producer', 'Producer(s)')
+          change_column_name('Productioncompanies ', 'Production company(s)')
+          change_column_name('Productioncompany ', 'Production company(s)')
+          change_column_name('Released', 'Release date')
+          change_column_name('Release Date', 'Release date')
+          change_column_name('Screen story by', 'Writer(s)')
+          change_column_name('Screenplay by', 'Writer(s)')
+          change_column_name('Story by', 'Writer(s)')
+          change_column_name('Theme music composer', 'Composer(s)')
+          change_column_name('Written by', 'Writer(s)')
+
+          return movie
+    
 * `def extract_transform_load (wiki_data, kaggle_data, ratings_data):` is a function that will do as the name implies: extract the messy data, transform it and then load it into two tables set up in PostgreSQL.  The `def extract_transform_load (wiki_data, kaggle_data, ratings_data):` is a function that calls the `def clean_movie(movie):` function and uses several other named and unnamed functions, i.e. lambda functions, and list comprehensions to do the work.  The function extracts, or reads, the Kaggle Metadata and ratings data from csv files using the Pandas module while the Wikipedia data is extracted from a JSON file using the JSON module.  The transformation of the data includes, but is not limited to filtering out rows not required, dropping duplicates, dropping null columns, parsing the monetary strings in various forms to convert them to numerical values, converting timestamps to date format, filling in missing values with zero, merging DataFrames, merging similar columns, dropping columns, renaming columns.  Then a connection to postgreSQL is created to upload the clean movie data into an existing table, dropping the ratings table from the database and uploading new ratings data into the database to replace it and running a timer for elapsed time to load the ratings data into the database in bins.
 
       def extract_transform_load (wiki_data, kaggle_data, ratings_data):
@@ -324,18 +368,44 @@ The purpose of this project is to prepare reusable code to clean, join and load 
               # add elapsed time to final print out
               print(f'Done. {time.time() - start_time} total seconds elapsed')
  
-    
+* Code to create a path to the file directory and variables for the three file:
 
+      file_dir = 'C://Users/kayse/OneDrive/Documents/GitHub/Movies-ETL/Data'  
+          
+      # The Wikipedia data            
+      wiki_file = f'{file_dir}/wikipedia-movies.json'  
+          
+      # The Kaggle metadata            
+      kaggle_file = f'{file_dir}/movies_metadata.csv' 
+          
+      # The MovieLens rating data.
+      ratings_file = f'{file_dir}/ratings.csv'
+
+* Code to call the function to Extract, Transform and Load:
+
+      wiki_movies_df = wiki_file
+      movies_with_ratings_df = kaggle_file
+      movies_df = ratings_file
+
+      extract_transform_load(wiki_movies_df, movies_with_ratings_df, movies_df)
+
+* Elapsed time to load the clean ratings to the database:
+<p align="center">
+  <img src="Resources/elapsed_time.png" width="900">
+</p>
+
+
+* postgreSQL
+  * `SELECT COUNT (*) FROM  movies`
 <p align="center">
   <img src="Resources/movies_query.png" width="300">
 </p>
+
+  * `SELECT COUNT (*) FROM  ratings`
 <p align="center">
   <img src="Resources/ratings_query.png" width="300">
 </p>
 
-<p align="center">
-  <img src="Resources/elapsed_time.png" width="900">
-  
-   
+
+
 [Back to the Table of Contents](https://github.com/rkaysen63/Movies-ETL/blob/master/README.md#table-of-contents)
-</p>
