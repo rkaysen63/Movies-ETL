@@ -396,7 +396,7 @@ The purpose of this project is to prepare reusable code to clean, join and load 
 </p>
 
 
-* postgreSQL Query to count the number of rows imported:
+* Code to confirm that the data arrived in the movie_data database using a postgreSQL Query to count the number of rows imported:
   * `SELECT COUNT (*) FROM  movies`
 <p align="center">
   <img src="Resources/movies_query.png" width="300">
