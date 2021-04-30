@@ -7,7 +7,7 @@
 
 ## Overview:
 
-The purpose of this project is to prepare reusable code to clean, join and load movie data from Wikipedia and Kaggle into a database to be use for a hackathon. The final code  is reusable, thereby allowing the user to take in new data and add to existing tables.
+The purpose of this project is to prepare reusable code to clean, join and load movie data from Wikipedia and Kaggle into a database for use in a hackathon. The final code  is reusable, thereby allowing the user to take in new data and add to existing tables.
 
 ## Resources
 
@@ -25,7 +25,7 @@ The purpose of this project is to prepare reusable code to clean, join and load 
 * `def clean_movie(movie):` is a function that will   
   * combine alternate titles located in the various language columns into one column called 'alt_titles"
   * remove the nearly empty language columns
-  * and merge similar column names
+  * and merge similar column names.
     
           def clean_movie(movie):
           movie = dict(movie) #create a non-destructive copy
