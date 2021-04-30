@@ -368,7 +368,7 @@ The purpose of this project is to prepare reusable code to clean, join and load 
               # add elapsed time to final print out
               print(f'Done. {time.time() - start_time} total seconds elapsed')
  
-* Code to create a path to the file directory and variables for the three file:
+* Code to create a path to the file directory and variables for the three files:
 
       file_dir = 'C://Users/kayse/OneDrive/Documents/GitHub/Movies-ETL/Data'  
           
@@ -395,7 +395,7 @@ The purpose of this project is to prepare reusable code to clean, join and load 
 </p>
 
 
-* postgreSQL
+* postgreSQL Query to count the number of rows imported:
   * `SELECT COUNT (*) FROM  movies`
 <p align="center">
   <img src="Resources/movies_query.png" width="300">
