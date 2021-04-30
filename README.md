@@ -19,6 +19,7 @@ The purpose of this project is to prepare reusable code to clean, join and load 
 * Database Management System:  PostgreSQL
 * Development Platform:  pgAdmin
 * Lesson Plan: UTA-VIRT-DATA-PT-02-2021-U-B-TTH, Module 8 Challenge
+* Coding Help:  https://www.tutorialspoint.com/python_data_access/python_postgresql_drop_table.htm
 
 ## Results:
 
@@ -102,7 +103,7 @@ The purpose of this project is to prepare reusable code to clean, join and load 
           # Drop duplicates of IMDb.  (inplace=true will change data frame.)
           wiki_movies_df.drop_duplicates(subset='imdb_id', inplace=True)
         
-          #  List comprehension to keep the columns that don't have null values from the wiki_movies_df DataFrame. 
+          # List comprehension to keep the columns that don't have null values from the wiki_movies_df DataFrame. 
           wiki_columns_to_keep = [column for column in wiki_movies_df.columns if wiki_movies_df[column].isnull().sum() < len(wiki_movies_df) * 0.9]
           wiki_movies_df = wiki_movies_df[wiki_columns_to_keep]
     
